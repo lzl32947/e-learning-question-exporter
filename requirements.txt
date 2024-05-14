@@ -1,0 +1,5 @@
+pymupdf
+tika
+tqdm
+python-docx
+openpyxl
