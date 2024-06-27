@@ -5,7 +5,7 @@ from module import PDFProcessor, AnalysisProcessor
 import sys
 
 from module import QuestionFactory, KaoShiBaoExcel
-from module.output import KaoShiBaoWord
+from module.outputs import KaoShiBaoWord
 
 sys.path.append(os.path.join(os.path.dirname(__file__)))
 if __name__ == '__main__':

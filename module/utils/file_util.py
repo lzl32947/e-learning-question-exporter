@@ -7,7 +7,7 @@ from typing import Optional
 STORE_PATH = "storage"
 INPUT_PATH = "input"
 CONFIG_PATH = "config"
-OUTPUT_PATH = "output"
+OUTPUT_PATH = "outputs"
 
 
 def get_store_path(base_path: Optional[str] = None) -> str:
