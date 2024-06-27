@@ -1,39 +1,21 @@
-import importlib
-import json
-import os.path
+import os
 
-from base_output import OutputExcel2KaoShiBao, OutputWord2KaoShiBao
+from module import PDFProcessor, AnalysisProcessor
 
-TARGET_CONFIG = "营销-核算账务收费员（初中高）"  # Change this to the config file you want to use
+import sys
 
-OUTPUT_TYPE = OutputWord2KaoShiBao  # Change this to the output type you want to use
+from module import QuestionFactory, KaoShiBaoExcel
+from module.output import KaoShiBaoWord
 
+sys.path.append(os.path.join(os.path.dirname(__file__)))
 if __name__ == '__main__':
-    assert os.path.exists("config")
+    pdf_processor = PDFProcessor.read_in_raw_pdf("input/电力电缆安装运维工（输电）-2024年05月17日机考题库.pdf", override=True)
+    inter = AnalysisProcessor.read_in_intermediate_results(pdf_processor)
+    context = AnalysisProcessor.read_context(inter)
+    questions = []
+    for s1, s2, catalog, ntype in context:
+        if s2 == 1:
+            questions.extend(QuestionFactory.create(inter, s1, s2, catalog, ntype))
+    a = KaoShiBaoWord(questions, "电力电缆安装运维工（输电）", pdf_processor).output()
 
-    if not os.path.exists("output"):
-        os.mkdir("output")
-
-    target_file = os.path.join("config", TARGET_CONFIG + ".json")
-
-    if os.path.exists(target_file):
-        with open(target_file, "r", encoding="utf-8") as fin:
-            config_raw = json.load(fin)
-            process = config_raw["process"]
-    else:
-        raise RuntimeError("Error >> Config not found!")
-
-    outputs = OUTPUT_TYPE(config_raw["title"])
-
-    for single_process in process:
-        lib = importlib.import_module("process")
-        if hasattr(lib, single_process["process"]):
-            _ = getattr(lib, single_process["process"])
-            target = _(**{"file": config_raw["file"], "filter": single_process["filter"],
-                          "level": config_raw["level"]})
-            target()
-            outputs.append(target)
-        else:
-            raise RuntimeError(
-                "Error >> Process not found! Please check whether it has been registered in __init__.py!")
-    outputs.write()
+    print(a)
