@@ -59,6 +59,7 @@ class PDFProcessor:
             if md5 is None:
                 return None
             else:
+                # Open the pdf file via pymupdf
                 doc = fitz.open(file_path)
 
                 storage_path = os.path.join(STORE_PATH, md5)

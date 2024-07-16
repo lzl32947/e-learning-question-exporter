@@ -12,6 +12,18 @@ class AnalysisProcessor:
 
     @staticmethod
     def read_in_intermediate_results(input_path: str) -> Optional[str]:
+        """
+        Read in the intermediate results of the pdf file
+        Parameters
+        ----------
+        input_path : str
+            The path towards the storage directory of given pdf file
+                Should contain the `text` directory with the `text.txt` file
+
+        Returns the intermediate results of the pdf file in string format or None if failed
+        -------
+
+        """
         try:
             text_path = os.path.join(input_path, TEXT_PATH, "text.txt")
             with open(text_path, "r", encoding="utf-8") as f:
@@ -21,6 +33,18 @@ class AnalysisProcessor:
 
     @staticmethod
     def read_title(intermediate: str):
+        """
+        Read the title of the pdf file
+
+        Parameters
+        ----------
+        intermediate : str
+            The intermediate results of the pdf file in string format
+
+        Returns the title of the pdf file or None if failed
+        -------
+
+        """
         try:
             regex = re.compile(r"^(.*)\s*(.*)\s*(\d+)年(\d+)月(\d+)日", re.M)
             p = regex.match(intermediate)
@@ -32,6 +56,18 @@ class AnalysisProcessor:
 
     @staticmethod
     def read_catalog(intermediate: str) -> Optional[set]:
+        """
+        Read the catalog of the pdf file
+
+        Parameters
+        ----------
+        intermediate : str
+            The intermediate results of the pdf file in string format
+
+        Returns the catalog of the pdf file or None if failed
+        -------
+
+        """
         data_set = set()
         try:
             regex = re.compile(r"^(\d+)\.\s(.*)\s", re.M)
@@ -44,6 +80,17 @@ class AnalysisProcessor:
 
     @staticmethod
     def read_context(intermediate: str) -> Optional[set[int,int, str, str]]:
+        """
+        Read the context menu of the pdf file
+        Parameters
+        ----------
+        intermediate : str
+            The intermediate results of the pdf file in string
+
+        Returns the context menu of the pdf file or None if failed
+        -------
+
+        """
         data_set = set()
         try:
             types = AnalysisProcessor.read_types(intermediate)
