@@ -71,7 +71,7 @@ class AnalysisProcessor:
         data_set = set()
         try:
             regex = re.compile(r"^(\d+)\.\s(.*)\s", re.M)
-            p = regex.findall(intermediate)
+            p = regex.findall(intermediate[:500])
             for item in p:
                 data_set.add((int(item[0]), item[1]))
             return data_set

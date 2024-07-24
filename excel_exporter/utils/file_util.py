@@ -6,7 +6,7 @@ from typing import Optional
 
 STORE_PATH = "storage"
 CONFIG_PATH = "config"
-OUTPUT_PATH = os.path.join("media", "pdf_output")
+OUTPUT_PATH = os.path.join("media", "excel_output")
 
 
 def get_store_path(base_path: Optional[str] = None) -> str:
