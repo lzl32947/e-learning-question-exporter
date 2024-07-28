@@ -167,4 +167,4 @@ storage/
 input/
 
 # Output files
-output/
+./output/
